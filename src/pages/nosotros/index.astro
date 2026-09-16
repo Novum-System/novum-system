@@ -14,18 +14,13 @@ import { SITE } from '../../utils/constants';
   <section class="page-hero section">
     <Container>
       <div class="page-hero__inner">
-        <div class="page-hero__side">
-          <span class="section-label">Nosotros</span>
-          <span class="page-hero__index mono-label">[ 003 ]</span>
-        </div>
-        <div class="page-hero__main">
-          <h1 class="page-hero__title">
-            Construimos con
-            <br />
-            <span class="text-gradient">propósito</span>
-          </h1>
-          <p class="page-hero__desc">{company.intro}</p>
-        </div>
+        <span class="section-label">Nosotros</span>
+        <h1 class="page-hero__title">
+          Construimos con
+          <br />
+          <span class="text-gradient">propósito</span>
+        </h1>
+        <p class="page-hero__desc">{company.intro}</p>
       </div>
     </Container>
   </section>
@@ -34,14 +29,12 @@ import { SITE } from '../../utils/constants';
     <Container>
       <div class="mv-grid">
         <article class="mv-card mv-card--mission">
-          <span class="mv-card__index mono-label">01</span>
           <h2 id="mission-heading" class="mv-card__title">Misión</h2>
           <p class="mv-card__text">{company.mission}</p>
           <span class="mv-card__line" aria-hidden="true"></span>
         </article>
 
         <article class="mv-card mv-card--vision">
-          <span class="mv-card__index mono-label">02</span>
           <h2 class="mv-card__title">Visión</h2>
           <p class="mv-card__text">{company.vision}</p>
           <span class="mv-card__line" aria-hidden="true"></span>
@@ -63,7 +56,6 @@ import { SITE } from '../../utils/constants';
       <div class="values__grid">
         {company.values.map((value, index) => (
           <article class="value-card">
-            <span class="value-card__num mono-label">0{index + 1}</span>
             <h3 class="value-card__title">{value.title}</h3>
             <p class="value-card__desc">{value.description}</p>
           </article>
@@ -76,22 +68,14 @@ import { SITE } from '../../utils/constants';
 </BaseLayout>
 
 <style>
-  .page-hero .page-hero__inner {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
-    padding-block: clamp(3.5rem, 2.5rem + 3vw, 5.5rem) clamp(3rem, 2rem + 3vw, 4.5rem);
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .page-hero__side {
+  .page-hero__inner {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .page-hero__index {
-    color: var(--color-accent);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-6);
+    max-width: 48rem;
+    padding-block: clamp(3.5rem, 2.5rem + 3vw, 6rem) clamp(3rem, 2rem + 3vw, 4.5rem);
+    border-bottom: 1px solid var(--color-border);
   }
 
   .page-hero__title {
@@ -132,10 +116,6 @@ import { SITE } from '../../utils/constants';
   .mv-card:hover {
     border-color: var(--color-border-strong);
     transform: translateY(-3px);
-  }
-
-  .mv-card__index {
-    color: var(--color-accent-3);
   }
 
   .mv-card__title {
@@ -203,10 +183,6 @@ import { SITE } from '../../utils/constants';
     border-color: var(--color-border-accent);
   }
 
-  .value-card__num {
-    color: var(--color-accent-3);
-  }
-
   .value-card__title {
     font-size: var(--text-xl);
   }
@@ -219,14 +195,7 @@ import { SITE } from '../../utils/constants';
 
   @media (min-width: 768px) {
     .page-hero__inner {
-      grid-template-columns: 1fr 2.2fr;
-      gap: var(--space-16);
-    }
-
-    .page-hero__side {
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: space-between;
+      margin-left: clamp(0rem, 3vw, 2.5rem);
     }
 
     .mv-grid {

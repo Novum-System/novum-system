@@ -14,22 +14,17 @@ import { ROUTES, SITE } from '../../utils/constants';
   <section class="page-hero section">
     <Container>
       <div class="page-hero__inner">
-        <div class="page-hero__side">
-          <span class="section-label">Soluciones</span>
-          <span class="page-hero__index mono-label">[ 002 ]</span>
-        </div>
-        <div class="page-hero__main">
-          <h1 class="page-hero__title">
-            Soluciones web que
-            <br />
-            <span class="text-gradient">mueven tu negocio</span>
-          </h1>
-          <p class="page-hero__desc">
-            Creamos la presencia digital que tu negocio necesita: landing pages,
-            sitios web corporativos y proyectos personalizados, diseñados y
-            desarrollados para ti.
-          </p>
-        </div>
+        <span class="section-label">Soluciones</span>
+        <h1 class="page-hero__title">
+          Soluciones web que
+          <br />
+          <span class="text-gradient">mueven tu negocio</span>
+        </h1>
+        <p class="page-hero__desc">
+          Creamos la presencia digital que tu negocio necesita: landing pages,
+          sitios web corporativos y proyectos personalizados, diseñados y
+          desarrollados para ti.
+        </p>
       </div>
     </Container>
   </section>
@@ -40,7 +35,6 @@ import { ROUTES, SITE } from '../../utils/constants';
       <ol class="approach__list">
         {solutionSteps.map((step) => (
           <li class="approach__row">
-            <div class="approach__row-num mono-label">{step.number}</div>
             <div class="approach__row-content">
               <h3 class="approach__row-title">{step.title}</h3>
               <p class="approach__row-desc">{step.description}</p>
@@ -66,7 +60,6 @@ import { ROUTES, SITE } from '../../utils/constants';
       <div class="capabilities__grid">
         {solutionCapabilities.map((capability, index) => (
           <article class="capability-card">
-            <span class="capability-card__num mono-label">0{index + 1}</span>
             <h3 class="capability-card__title">{capability.title}</h3>
             <p class="capability-card__desc">{capability.description}</p>
             <span class="capability-card__line" aria-hidden="true"></span>
@@ -86,22 +79,14 @@ import { ROUTES, SITE } from '../../utils/constants';
 </BaseLayout>
 
 <style>
-  .page-hero .page-hero__inner {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
-    padding-block: clamp(3.5rem, 2.5rem + 3vw, 5.5rem) clamp(3rem, 2rem + 3vw, 4.5rem);
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .page-hero__side {
+  .page-hero__inner {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .page-hero__index {
-    color: var(--color-accent);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-6);
+    max-width: 48rem;
+    padding-block: clamp(3.5rem, 2.5rem + 3vw, 6rem) clamp(3rem, 2rem + 3vw, 4.5rem);
+    border-bottom: 1px solid var(--color-border);
   }
 
   .page-hero__title {
@@ -139,11 +124,6 @@ import { ROUTES, SITE } from '../../utils/constants';
 
   .approach__row:hover {
     padding-left: var(--space-4);
-  }
-
-  .approach__row-num {
-    color: var(--color-accent-3);
-    padding-top: 0.4rem;
   }
 
   .approach__row-title {
@@ -201,10 +181,6 @@ import { ROUTES, SITE } from '../../utils/constants';
     transform: translateY(-3px);
   }
 
-  .capability-card__num {
-    color: var(--color-accent-3);
-  }
-
   .capability-card__title {
     font-size: var(--text-xl);
   }
@@ -236,20 +212,7 @@ import { ROUTES, SITE } from '../../utils/constants';
 
   @media (min-width: 768px) {
     .page-hero__inner {
-      grid-template-columns: 1fr 2.2fr;
-      gap: var(--space-16);
-    }
-
-    .page-hero__side {
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: space-between;
-    }
-
-    .approach__row {
-      grid-template-columns: auto 1fr;
-      gap: var(--space-12);
-      align-items: start;
+      margin-left: clamp(0rem, 3vw, 2.5rem);
     }
 
     .capabilities__grid {
