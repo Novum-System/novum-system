@@ -1,0 +1,149 @@
+---
+import Container from '../common/Container.astro';
+import Button from '../common/Button.astro';
+import { mainNav } from '../../data/navigation';
+import { company } from '../../data/company';
+import { ROUTES } from '../../utils/constants';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer" role="contentinfo">
+  <hr class="hairline" />
+  <Container>
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href={ROUTES.home} aria-label="NOVUM SYSTEM - Ir al inicio" class="footer__logo">
+          <img
+            src="/novum-system-logo-transparent.png"
+            alt="NOVUM SYSTEM"
+            width="124"
+            height="120"
+            loading="lazy"
+            decoding="async"
+            class="footer__logo-img"
+          />
+        </a>
+        <p class="footer__tagline">{company.tagline}</p>
+      </div>
+
+      <nav class="footer__nav" aria-label="Navegación del pie de página">
+        <p class="footer__nav-title">Navegación</p>
+        <ul class="footer__nav-list">
+          {mainNav.map((item) => (
+            <li>
+              <a href={item.href} class="footer__link">
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="footer__cta">
+        <p class="footer__nav-title">¿Tienes un proyecto en mente?</p>
+        <p class="footer__cta-desc">
+          Conversemos sobre cómo una página web profesional puede impulsar tu negocio.
+        </p>
+        <Button href={ROUTES.contacto} variant="primary">
+          Hablemos
+        </Button>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; {currentYear} NOVUM SYSTEM</p>
+      <p class="footer__domain mono-label">novumsystem.online</p>
+    </div>
+  </Container>
+</footer>
+
+<style>
+  .footer {
+    padding-bottom: calc(var(--space-8) + env(safe-area-inset-bottom));
+    background: linear-gradient(180deg, transparent, rgba(5, 8, 13, 0.6));
+  }
+
+  .footer__top {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+    padding-block: clamp(3.5rem, 3rem + 3vw, 6rem) var(--space-12);
+  }
+
+  .footer__logo-img {
+    width: clamp(88px, 7vw, 124px);
+    height: auto;
+    display: block;
+    margin-bottom: var(--space-4);
+    /* Logo transparente (oscuro) tonificado en claro para superficies oscuras */
+    filter: brightness(0) invert(1);
+  }
+
+  .footer__tagline {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    max-width: 34ch;
+    line-height: var(--leading-relaxed);
+  }
+
+  .footer__nav-title {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-5);
+  }
+
+  .footer__nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .footer__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-block: 0.25rem;
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .footer__link:hover {
+    color: var(--color-accent-3);
+  }
+
+  .footer__cta-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    max-width: 34ch;
+    margin-bottom: var(--space-6);
+  }
+
+  .footer__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-8);
+  }
+
+  .footer__copy {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 768px) {
+    .footer__top {
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: var(--space-12);
+    }
+  }
+</style>

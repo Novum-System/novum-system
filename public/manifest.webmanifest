@@ -1,0 +1,13 @@
+{
+  "name": "NOVUM SYSTEM",
+  "short_name": "NOVUM",
+  "description": "NOVUM SYSTEM: diseño y desarrollo de páginas web modernas y profesionales.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080b10",
+  "theme_color": "#080b10",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

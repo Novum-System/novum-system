@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/common/Button.astro';
+import { ROUTES } from '../utils/constants';
+---
+
+<BaseLayout
+  title="Página no encontrada"
+  description="La página que buscas no existe o ha sido movida."
+  noindex={true}
+>
+  <section class="error-page">
+    <div class="error-page__bg" aria-hidden="true">
+      <div class="error-page__grid"></div>
+      <div class="error-page__glow"></div>
+    </div>
+
+    <div class="error-page__inner">
+      <span class="error-page__code mono-label">[ 404 ]</span>
+      <h1 class="error-page__title">Página no encontrada</h1>
+      <p class="error-page__desc">
+        La página que buscas no existe o fue movida.
+      </p>
+      <div class="error-page__actions">
+        <Button href={ROUTES.home} size="lg">Volver al inicio</Button>
+        <Button href={ROUTES.servicios} variant="secondary" size="lg">
+          Conocer servicios
+        </Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .error-page {
+    position: relative;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    padding: var(--header-height) var(--container-padding) var(--space-12);
+  }
+
+  .error-page__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .error-page__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 10%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 10%, transparent 70%);
+  }
+
+  .error-page__glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 560px;
+    height: 560px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(0, 153, 255, 0.12) 0%, transparent 65%);
+    animation: glow-pulse 7s var(--ease-in-out) infinite;
+  }
+
+  .error-page__inner {
+    position: relative;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .error-page__code {
+    font-size: clamp(4rem, 3rem + 6vw, 8rem);
+    letter-spacing: 0.04em;
+    color: var(--color-accent);
+    opacity: 0.35;
+    line-height: 1;
+    margin-bottom: var(--space-8);
+  }
+
+  .error-page__title {
+    font-size: clamp(2rem, 1.5rem + 2.5vw, 3.25rem);
+    margin-bottom: var(--space-5);
+  }
+
+  .error-page__desc {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-10);
+  }
+
+  .error-page__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-4);
+  }
+</style>

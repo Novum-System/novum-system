@@ -1,0 +1,163 @@
+---
+import Container from '../common/Container.astro';
+import { solutionSteps } from '../../data/solutions';
+import { ROUTES } from '../../utils/constants';
+---
+
+<section class="solutions section" aria-labelledby="solutions-heading">
+  <div class="solutions__glow" aria-hidden="true"></div>
+  <Container>
+    <div class="solutions__layout">
+      <div class="solutions__intro">
+        <span class="section-label" id="solutions-heading">Soluciones</span>
+        <h2 class="solutions__title">
+          De tu idea
+          <br />
+          a una web que funciona.
+        </h2>
+        <p class="solutions__desc">
+          Creamos páginas web que conectan con tus clientes y hacen crecer tu
+          negocio: desde una landing page hasta un sitio web corporativo completo.
+        </p>
+        <a href={ROUTES.soluciones} class="link-arrow">
+          Conocer soluciones <span aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <ol class="solutions__list">
+        {solutionSteps.map((step) => (
+          <li class="solutions__item">
+            <span class="solutions__item-number mono-label">{step.number}</span>
+            <div class="solutions__item-body">
+              <h3 class="solutions__item-title">{step.title}</h3>
+              <p class="solutions__item-desc">{step.description}</p>
+            </div>
+            <span class="solutions__item-arrow" aria-hidden="true">→</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .solutions {
+    background:
+      radial-gradient(800px 420px at 88% 12%, rgba(0, 153, 255, 0.07), transparent 62%),
+      linear-gradient(180deg, transparent 0%, rgba(5, 8, 13, 0.6) 100%);
+    border-block: 1px solid var(--color-border);
+  }
+
+  .solutions__glow {
+    display: none;
+  }
+
+  .solutions__layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(3rem, 2rem + 4vw, 6rem);
+    align-items: start;
+  }
+
+  .solutions__intro {
+    max-width: 520px;
+  }
+
+  .solutions__title {
+    font-size: clamp(2rem, 1.25rem + 3.25vw, 3.5rem);
+    margin-bottom: var(--space-6);
+  }
+
+  .solutions__desc {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-8);
+  }
+
+  /* List */
+  .solutions__list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .solutions__item {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--space-5);
+    align-items: start;
+    padding-block: clamp(1.75rem, 3vw, 2.5rem);
+    border-bottom: 1px solid var(--color-border);
+    transition:
+      background var(--duration-normal) var(--ease-out),
+      padding-left var(--duration-normal) var(--ease-out);
+  }
+
+  .solutions__item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--gradient-accent);
+    opacity: 0;
+    transition: opacity var(--duration-normal) var(--ease-out);
+  }
+
+  .solutions__item:hover {
+    background: linear-gradient(90deg, rgba(0, 191, 255, 0.04), transparent 70%);
+    padding-left: var(--space-4);
+  }
+
+  .solutions__item:hover::before {
+    opacity: 1;
+  }
+
+  .solutions__item-number {
+    padding-top: 0.4rem;
+    color: var(--color-accent-3);
+  }
+
+  .solutions__item-title {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    margin-bottom: var(--space-3);
+  }
+
+  .solutions__item-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    max-width: 52ch;
+  }
+
+  .solutions__item-arrow {
+    color: var(--color-text-muted);
+    opacity: 0;
+    transform: translateX(-6px);
+    transition:
+      opacity var(--duration-normal) var(--ease-out),
+      transform var(--duration-normal) var(--ease-out),
+      color var(--duration-normal) var(--ease-out);
+  }
+
+  .solutions__item:hover .solutions__item-arrow {
+    opacity: 1;
+    transform: translateX(0);
+    color: var(--color-accent-3);
+  }
+
+  @media (min-width: 1024px) {
+    .solutions__layout {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+
+    .solutions__intro {
+      position: sticky;
+      top: calc(var(--header-height) + 2rem);
+    }
+  }
+</style>

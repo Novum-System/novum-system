@@ -1,0 +1,96 @@
+---
+import Container from '../common/Container.astro';
+import Button from '../common/Button.astro';
+import { ROUTES } from '../../utils/constants';
+---
+
+<section class="cta-section section" aria-labelledby="cta-heading">
+  <div class="cta-section__bg" aria-hidden="true">
+    <div class="cta-section__grid"></div>
+    <div class="cta-section__glow"></div>
+  </div>
+
+  <Container>
+    <div class="cta-section__inner">
+      <span class="section-label section-label--center">Hablemos</span>
+      <h2 id="cta-heading" class="cta-section__title">
+        ¿Listo para que tu negocio
+        <br />
+        <span class="text-gradient">tenga su lugar en la web?</span>
+      </h2>
+      <p class="cta-section__desc">
+        Cuéntanos qué necesita tu sitio web y lo diseñaremos a la medida de tu empresa.
+      </p>
+      <div class="cta-section__actions">
+        <Button href={ROUTES.contacto} size="lg">Hablemos</Button>
+        <Button href={ROUTES.servicios} variant="secondary" size="lg">
+          Conocer servicios
+        </Button>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .cta-section {
+    text-align: center;
+    overflow: hidden;
+    background: linear-gradient(180deg, transparent, rgba(5, 8, 13, 0.7));
+  }
+
+  .cta-section__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .cta-section__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, black 10%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, black 10%, transparent 70%);
+  }
+
+  .cta-section__glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 620px;
+    height: 620px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(0, 153, 255, 0.14) 0%, transparent 65%);
+    animation: glow-pulse 8s var(--ease-in-out) infinite;
+  }
+
+  .cta-section__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin-inline: auto;
+  }
+
+  .cta-section__title {
+    font-size: clamp(2.25rem, 1.5rem + 3.5vw, 4rem);
+    margin-bottom: var(--space-6);
+  }
+
+  .cta-section__desc {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    max-width: 52ch;
+    margin-inline: auto;
+    margin-bottom: var(--space-10);
+  }
+
+  .cta-section__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-4);
+  }
+</style>

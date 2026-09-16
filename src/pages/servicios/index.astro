@@ -1,0 +1,211 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/common/Container.astro';
+import Button from '../../components/common/Button.astro';
+import CtaSection from '../../components/home/CtaSection.astro';
+import { services } from '../../data/services';
+import { ROUTES, SITE } from '../../utils/constants';
+---
+
+<BaseLayout
+  title="Servicios"
+  description="Diseño y desarrollo de páginas web: landing pages, sitios web corporativos y sitios web personalizados, modernos y adaptados a cada negocio."
+  canonical={`${SITE.url}servicios/`}
+>
+  <section class="page-hero section">
+    <Container>
+      <div class="page-hero__inner">
+        <div class="page-hero__side">
+          <span class="section-label">Servicios</span>
+          <span class="page-hero__index mono-label">[ 001 ]</span>
+        </div>
+        <div class="page-hero__main">
+          <h1 class="page-hero__title">
+            Desarrollo web con
+            <br />
+            <span class="text-gradient">enfoque y propósito</span>
+          </h1>
+          <p class="page-hero__desc">
+            Diseñamos y desarrollamos páginas web modernas, profesionales y
+            adaptadas a las necesidades de cada negocio.
+          </p>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <section class="section section--services" aria-labelledby="services-list-heading">
+    <Container>
+      <span class="sr-only" id="services-list-heading">Lista de servicios</span>
+      <div class="services-list">
+        {services.map((service) => (
+          <article class="service-row">
+            <div class="service-row__num mono-label">{service.number}</div>
+            <div class="service-row__body">
+              <h2 class="service-row__title">{service.title}</h2>
+              <p class="service-row__desc">{service.description}</p>
+            </div>
+            <div class="service-row__meta">
+              <span class="service-row__tag mono-label">servicio web</span>
+              <span class="service-row__arrow" aria-hidden="true">→</span>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="services-footer">
+        <p class="services-footer__text">
+          ¿Necesitas algo más específico? Desarrollamos el sitio web que tu negocio necesita a medida.
+        </p>
+        <Button href={ROUTES.contacto}>Hablemos</Button>
+      </div>
+    </Container>
+  </section>
+
+  <CtaSection />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-bottom: 0;
+  }
+
+  .page-hero__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    padding-block: clamp(3.5rem, 2.5rem + 3vw, 5.5rem) clamp(3rem, 2rem + 3vw, 4.5rem);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .page-hero__side {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .page-hero__index {
+    color: var(--color-accent);
+  }
+
+  .page-hero__title {
+    font-size: clamp(2.25rem, 1.5rem + 3.5vw, 4.25rem);
+    letter-spacing: var(--tracking-tight);
+    margin-bottom: var(--space-6);
+  }
+
+  .page-hero__desc {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    max-width: 56ch;
+  }
+
+  /* Services list */
+  .section--services {
+    padding-top: var(--space-16);
+  }
+
+  .services-list {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .service-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    padding-block: clamp(1.75rem, 3vw, 2.5rem);
+    border-bottom: 1px solid var(--color-border);
+    transition:
+      background var(--duration-normal) var(--ease-out),
+      padding-left var(--duration-normal) var(--ease-out);
+  }
+
+  .service-row:hover {
+    background: linear-gradient(90deg, rgba(0, 191, 255, 0.045), transparent 70%);
+    padding-left: var(--space-4);
+  }
+
+  .service-row__num {
+    color: var(--color-accent-3);
+    padding-top: 0.35rem;
+  }
+
+  .service-row__title {
+    font-size: clamp(1.5rem, 1.125rem + 1.5vw, 2rem);
+    font-weight: 600;
+    margin-bottom: var(--space-3);
+  }
+
+  .service-row__desc {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    max-width: 62ch;
+  }
+
+  .service-row__meta {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .service-row__tag {
+    color: var(--color-text-muted);
+  }
+
+  .service-row__arrow {
+    font-size: var(--text-lg);
+    color: var(--color-accent-3);
+  }
+
+  .services-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-6);
+    margin-top: var(--space-16);
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, var(--color-surface), rgba(13, 17, 23, 0.4));
+  }
+
+  .services-footer__text {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    max-width: 44ch;
+  }
+
+  @media (min-width: 768px) {
+    .page-hero__inner {
+      grid-template-columns: 1fr 2.2fr;
+      gap: var(--space-16);
+    }
+
+    .page-hero__side {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .service-row {
+      grid-template-columns: auto 1fr auto;
+      gap: var(--space-8);
+      align-items: start;
+    }
+
+    .service-row__meta {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+      align-self: stretch;
+    }
+
+    .services-footer {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+</style>

@@ -1,0 +1,411 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/common/Container.astro';
+import Button from '../../components/common/Button.astro';
+import { SITE } from '../../utils/constants';
+---
+
+<BaseLayout
+  title="Contacto"
+  description="Hablemos de tu proyecto web. Cuéntanos qué necesitas y diseñaremos la página web adecuada para tu negocio."
+  canonical={`${SITE.url}contacto/`}
+>
+  <section class="contact section">
+    <Container>
+      <div class="contact__layout">
+        <div class="contact__intro">
+          <span class="section-label">Contacto</span>
+          <span class="contact__index mono-label">[ 004 ]</span>
+          <h1 class="contact__title">
+            Hablemos
+            <br />
+            <span class="text-gradient">de tu proyecto</span>
+          </h1>
+          <p class="contact__desc">
+            Cuéntanos qué necesita tu sitio web. Analizamos tu contexto y te
+            proponemos el enfoque más adecuado para tu proyecto.
+          </p>
+
+          <ul class="contact__steps">
+            <li>
+              <span class="contact__step-num mono-label">01</span>
+              <span class="contact__step-text">Nos escribes con tu necesidad</span>
+            </li>
+            <li>
+              <span class="contact__step-num mono-label">02</span>
+              <span class="contact__step-text">Agendamos una conversación breve</span>
+            </li>
+            <li>
+              <span class="contact__step-num mono-label">03</span>
+              <span class="contact__step-text">Definimos el siguiente paso</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="contact__panel">
+          <div class="contact__panel-top">
+            <span class="contact__panel-label mono-label">nuevo proyecto</span>
+            <span class="contact__panel-pulse"></span>
+          </div>
+
+          <!--
+            Formulario solo frontend. La validación usa atributos HTML nativos
+            (required, type="email", autocomplete) y mensajes de error accesibles.
+            Cuando exista un servicio de envío real, conéctalo en el listener de submit.
+          -->
+          <form
+            class="contact__form"
+            id="contact-form"
+            aria-label="Formulario de contacto"
+            novalidate
+          >
+            <div class="contact__field">
+              <label for="name" class="contact__label">Nombre</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="contact__input"
+                placeholder="Tu nombre"
+                autocomplete="name"
+                required
+                aria-describedby="name-error"
+              />
+              <span id="name-error" class="contact__error" role="alert"></span>
+            </div>
+            <div class="contact__field">
+              <label for="company" class="contact__label">Empresa</label>
+              <input
+                type="text"
+                id="company"
+                name="company"
+                class="contact__input"
+                placeholder="Tu empresa"
+                autocomplete="organization"
+                aria-describedby="company-error"
+              />
+              <span id="company-error" class="contact__error" role="alert"></span>
+            </div>
+            <div class="contact__field">
+              <label for="email" class="contact__label">Correo</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="contact__input"
+                placeholder="correo@empresa.com"
+                autocomplete="email"
+                required
+                aria-describedby="email-error"
+              />
+              <span id="email-error" class="contact__error" role="alert"></span>
+            </div>
+            <div class="contact__field">
+              <label for="message" class="contact__label">Mensaje</label>
+              <textarea
+                id="message"
+                name="message"
+                class="contact__textarea"
+                rows="5"
+                placeholder="Cuéntanos brevemente qué necesita tu sitio web..."
+                required
+                aria-describedby="message-error"
+              ></textarea>
+              <span id="message-error" class="contact__error" role="alert"></span>
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--lg contact__submit">
+              Enviar mensaje
+            </button>
+
+            <p class="contact__status" id="contact-status" role="status" aria-live="polite"></p>
+          </form>
+
+          <p class="contact__note">
+            Formulario solo frontend: mientras no haya un servicio de envío conectado,
+            los mensajes no se envían.
+          </p>
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('contact-status');
+
+  const messages = {
+    valueMissing: 'Este campo es obligatorio.',
+    typeMismatch: 'Introduce un correo electrónico válido.',
+    tooShort: 'Este campo es demasiado corto.',
+  };
+
+  function fieldErrorId(input) {
+    return input.getAttribute('aria-describedby');
+  }
+
+  function setError(input, message) {
+    const errorId = fieldErrorId(input);
+    const error = errorId ? document.getElementById(errorId) : null;
+    const field = input.closest('.contact__field');
+
+    if (message) {
+      input.setAttribute('aria-invalid', 'true');
+      if (error) error.textContent = message;
+      if (field) field.classList.add('contact__field--error');
+    } else {
+      input.removeAttribute('aria-invalid');
+      if (error) error.textContent = '';
+      if (field) field.classList.remove('contact__field--error');
+    }
+  }
+
+  function validateField(input) {
+    let message = '';
+    if (input.validity.valueMissing) {
+      message = messages.valueMissing;
+    } else if (input.validity.typeMismatch) {
+      message = messages.typeMismatch;
+    } else if (input.validity.tooShort) {
+      message = messages.tooShort;
+    }
+    setError(input, message);
+    return !message;
+  }
+
+  if (form && status) {
+    const fields = Array.from(form.querySelectorAll('input, textarea'));
+
+    fields.forEach((input) => {
+      input.addEventListener('blur', () => {
+        if (input.dataset.touched === 'true') {
+          validateField(input);
+        } else {
+          input.dataset.touched = 'true';
+        }
+      });
+
+      input.addEventListener('input', () => {
+        setError(input, '');
+        status.textContent = '';
+      });
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let firstInvalid = null;
+
+      fields.forEach((input) => {
+        input.dataset.touched = 'true';
+        const valid = validateField(input);
+        if (!valid && !firstInvalid) firstInvalid = input;
+      });
+
+      if (firstInvalid) {
+        status.textContent = 'Revisa los campos marcados para continuar.';
+        firstInvalid.focus();
+        return;
+      }
+
+      status.textContent =
+        'El formulario está preparado para la integración con un servicio de envío. ' +
+        'Por el momento no hay un servicio de envío conectado, así que tu mensaje no se envió.';
+    });
+  }
+</script>
+
+<style>
+  .contact .contact__layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(3rem, 2rem + 4vw, 6rem);
+    align-items: start;
+    padding-block: clamp(2rem, 1rem + 2vw, 3rem);
+  }
+
+  .contact__intro {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .contact__index {
+    display: inline-block;
+    color: var(--color-accent);
+    margin-bottom: var(--space-8);
+  }
+
+  .contact__title {
+    font-size: clamp(2.5rem, 1.75rem + 4vw, 4.75rem);
+    letter-spacing: var(--tracking-tight);
+    margin-bottom: var(--space-6);
+  }
+
+  .contact__desc {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    max-width: 48ch;
+    margin-bottom: var(--space-12);
+  }
+
+  .contact__steps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .contact__steps li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding-block: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .contact__step-num {
+    color: var(--color-accent-3);
+  }
+
+  .contact__step-text {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+  }
+
+  /* Panel / form */
+  .contact__panel {
+    position: relative;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    background: linear-gradient(180deg, var(--color-surface), rgba(13, 17, 23, 0.4));
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+
+  .contact__panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 191, 255, 0.5), transparent);
+  }
+
+  .contact__panel-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .contact__panel-label {
+    letter-spacing: 0.22em;
+  }
+
+  .contact__panel-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--color-accent-3);
+    box-shadow: 0 0 12px var(--color-accent-glow);
+    animation: glow-pulse 2.4s var(--ease-in-out) infinite;
+  }
+
+  .contact__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .contact__field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .contact__label {
+    font-size: var(--text-sm);
+    font-weight: 550;
+    color: var(--color-text);
+  }
+
+  .contact__input,
+  .contact__textarea {
+    width: 100%;
+    padding: 0.8125rem 1rem;
+    background: rgba(8, 11, 16, 0.7);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    transition:
+      border-color var(--duration-fast) var(--ease-out),
+      box-shadow var(--duration-fast) var(--ease-out);
+  }
+
+  .contact__input::placeholder,
+  .contact__textarea::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .contact__input:focus,
+  .contact__textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.14);
+  }
+
+  .contact__field--error .contact__input,
+  .contact__field--error .contact__textarea {
+    border-color: rgba(239, 68, 68, 0.65);
+  }
+
+  .contact__field--error .contact__input:focus,
+  .contact__field--error .contact__textarea:focus {
+    border-color: var(--color-error);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.14);
+  }
+
+  .contact__error {
+    min-height: 1.25rem;
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+    color: var(--color-error);
+  }
+
+  .contact__textarea {
+    resize: vertical;
+    min-height: 128px;
+  }
+
+  .contact__submit {
+    align-self: flex-start;
+    margin-top: var(--space-2);
+  }
+
+  .contact__status {
+    min-height: 1.25rem;
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+    color: var(--color-text-secondary);
+  }
+
+  .contact__note {
+    margin-top: var(--space-6);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 768px) {
+    .contact__layout {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+  }
+</style>

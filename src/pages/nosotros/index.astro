@@ -1,0 +1,246 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/common/Container.astro';
+import CtaSection from '../../components/home/CtaSection.astro';
+import { company } from '../../data/company';
+import { SITE } from '../../utils/constants';
+---
+
+<BaseLayout
+  title="Nosotros"
+  description="Conoce a NOVUM SYSTEM: quiénes somos, nuestra misión, nuestra visión y los valores que guían nuestro trabajo."
+  canonical={`${SITE.url}nosotros/`}
+>
+  <section class="page-hero section">
+    <Container>
+      <div class="page-hero__inner">
+        <div class="page-hero__side">
+          <span class="section-label">Nosotros</span>
+          <span class="page-hero__index mono-label">[ 003 ]</span>
+        </div>
+        <div class="page-hero__main">
+          <h1 class="page-hero__title">
+            Construimos con
+            <br />
+            <span class="text-gradient">propósito</span>
+          </h1>
+          <p class="page-hero__desc">{company.intro}</p>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <section class="mission-vision section" aria-labelledby="mission-heading">
+    <Container>
+      <div class="mv-grid">
+        <article class="mv-card mv-card--mission">
+          <span class="mv-card__index mono-label">01</span>
+          <h2 id="mission-heading" class="mv-card__title">Misión</h2>
+          <p class="mv-card__text">{company.mission}</p>
+          <span class="mv-card__line" aria-hidden="true"></span>
+        </article>
+
+        <article class="mv-card mv-card--vision">
+          <span class="mv-card__index mono-label">02</span>
+          <h2 class="mv-card__title">Visión</h2>
+          <p class="mv-card__text">{company.vision}</p>
+          <span class="mv-card__line" aria-hidden="true"></span>
+        </article>
+      </div>
+    </Container>
+  </section>
+
+  <section class="values section" aria-labelledby="values-heading">
+    <Container>
+      <div class="values__heading">
+        <span class="section-label" id="values-heading">Valores</span>
+        <h2 class="values__title">Lo que <span class="text-gradient">nos guía</span></h2>
+        <p class="values__desc">
+          Principios que definen cómo trabajamos y cómo nos relacionamos con nuestros clientes.
+        </p>
+      </div>
+
+      <div class="values__grid">
+        {company.values.map((value, index) => (
+          <article class="value-card">
+            <span class="value-card__num mono-label">0{index + 1}</span>
+            <h3 class="value-card__title">{value.title}</h3>
+            <p class="value-card__desc">{value.description}</p>
+          </article>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <CtaSection />
+</BaseLayout>
+
+<style>
+  .page-hero .page-hero__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    padding-block: clamp(3.5rem, 2.5rem + 3vw, 5.5rem) clamp(3rem, 2rem + 3vw, 4.5rem);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .page-hero__side {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .page-hero__index {
+    color: var(--color-accent);
+  }
+
+  .page-hero__title {
+    font-size: clamp(2.25rem, 1.5rem + 3.5vw, 4.25rem);
+    letter-spacing: var(--tracking-tight);
+    margin-bottom: var(--space-6);
+  }
+
+  .page-hero__desc {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    max-width: 62ch;
+  }
+
+  /* Mission / Vision */
+  .mv-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .mv-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    background: linear-gradient(180deg, var(--color-surface) 0%, rgba(13, 17, 23, 0.5) 100%);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition:
+      border-color var(--duration-normal) var(--ease-out),
+      transform var(--duration-normal) var(--ease-out);
+  }
+
+  .mv-card:hover {
+    border-color: var(--color-border-strong);
+    transform: translateY(-3px);
+  }
+
+  .mv-card__index {
+    color: var(--color-accent-3);
+  }
+
+  .mv-card__title {
+    font-size: clamp(1.5rem, 1.125rem + 1.5vw, 2rem);
+    margin-bottom: var(--space-2);
+  }
+
+  .mv-card__text {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    max-width: 56ch;
+  }
+
+  .mv-card__line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-accent), transparent 70%);
+    opacity: 0;
+    transition: opacity var(--duration-normal) var(--ease-out);
+  }
+
+  .mv-card:hover .mv-card__line {
+    opacity: 1;
+  }
+
+  /* Values */
+  .values__heading {
+    max-width: 560px;
+    margin-bottom: clamp(2.5rem, 2rem + 2.5vw, 4rem);
+  }
+
+  .values__title {
+    font-size: clamp(1.875rem, 1.25rem + 3vw, 3rem);
+    margin-bottom: var(--space-5);
+  }
+
+  .values__desc {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .values__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .value-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: clamp(1.5rem, 3vw, 2rem);
+    background: linear-gradient(180deg, var(--color-surface) 0%, rgba(13, 17, 23, 0.5) 100%);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: border-color var(--duration-normal) var(--ease-out);
+  }
+
+  .value-card:hover {
+    border-color: var(--color-border-accent);
+  }
+
+  .value-card__num {
+    color: var(--color-accent-3);
+  }
+
+  .value-card__title {
+    font-size: var(--text-xl);
+  }
+
+  .value-card__desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  @media (min-width: 768px) {
+    .page-hero__inner {
+      grid-template-columns: 1fr 2.2fr;
+      gap: var(--space-16);
+    }
+
+    .page-hero__side {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .mv-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .values__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .values__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>
