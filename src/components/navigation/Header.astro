@@ -10,11 +10,13 @@ const isActive = (href: string) =>
   <div class="header__inner">
     <a href={ROUTES.home} class="header__logo" aria-label="NOVUM SYSTEM — Inicio">
       <img
-        src="/novum-mark-192.png"
+        src="/novum-mark-48.webp"
+        srcset="/novum-mark-48.webp 1x, /novum-mark-96.webp 2x"
         alt=""
-        width="192"
-        height="192"
+        width="48"
+        height="48"
         loading="eager"
+        fetchpriority="high"
         decoding="async"
         class="header__logo-img"
       />
@@ -100,7 +102,15 @@ const isActive = (href: string) =>
     const mq = window.matchMedia('(min-width: 1024px)');
 
     if (header) {
-      const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 12);
+      let ticking = false;
+      const onScroll = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          header.classList.toggle('is-scrolled', window.scrollY > 12);
+          ticking = false;
+        });
+      };
       onScroll();
       window.addEventListener('scroll', onScroll, { passive: true });
     }
