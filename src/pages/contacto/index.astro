@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Container from '../../components/common/Container.astro';
-import Button from '../../components/common/Button.astro';
 import { SITE } from '../../utils/constants';
 ---
 
@@ -15,11 +14,13 @@ import { SITE } from '../../utils/constants';
       <div class="contact__layout">
         <div class="contact__intro">
           <span class="section-label">Contacto</span>
+
           <h1 class="contact__title">
             Hablemos
             <br />
             <span class="text-gradient">de tu proyecto</span>
           </h1>
+
           <p class="contact__desc">
             Cuéntanos qué necesita tu sitio web. Analizamos tu contexto y te
             proponemos el enfoque más adecuado para tu proyecto.
@@ -27,38 +28,56 @@ import { SITE } from '../../utils/constants';
 
           <ul class="contact__steps">
             <li>
-              <span class="contact__step-text">Nos escribes con tu necesidad</span>
+              <span class="contact__step-text">
+                Nos escribes con tu necesidad
+              </span>
             </li>
             <li>
-              <span class="contact__step-text">Agendamos una conversación breve</span>
+              <span class="contact__step-text">
+                Agendamos una conversación breve
+              </span>
             </li>
             <li>
-              <span class="contact__step-text">Definimos el siguiente paso</span>
+              <span class="contact__step-text">
+                Definimos el siguiente paso
+              </span>
             </li>
           </ul>
         </div>
 
         <div class="contact__panel">
           <div class="contact__panel-top">
-            <span class="contact__panel-label mono-label">nuevo proyecto</span>
+            <span class="contact__panel-label mono-label">
+              nuevo proyecto
+            </span>
             <span class="contact__panel-pulse"></span>
           </div>
 
-          <!--
-            Formulario con envío a Formspree vía fetch. La validación usa atributos
-            HTML nativos (required, type="email", autocomplete) y mensajes de error
-            accesibles. El listener de submit envía los datos sin recargar la página.
-          -->
           <form
             class="contact__form"
             id="contact-form"
             aria-label="Formulario de contacto"
-            action="https://formspree.io/f/mjykvbrw"
+            action="https://formspree.io/f/xrppkrvj"
             method="POST"
             novalidate
           >
+            <!-- Honeypot antispam: debe permanecer vacío. Formspree reconoce _gotcha. -->
+            <div class="contact__honeypot" aria-hidden="true">
+              <label for="website_confirm">No rellenar este campo</label>
+              <input
+                type="text"
+                id="website_confirm"
+                name="_gotcha"
+                tabindex="-1"
+                autocomplete="off"
+              />
+            </div>
+
             <div class="contact__field">
-              <label for="name" class="contact__label">Nombre</label>
+              <label for="name" class="contact__label">
+                Nombre
+              </label>
+
               <input
                 type="text"
                 id="name"
@@ -67,12 +86,23 @@ import { SITE } from '../../utils/constants';
                 placeholder="Tu nombre"
                 autocomplete="name"
                 required
+                minlength="2"
+                maxlength="80"
                 aria-describedby="name-error"
               />
-              <span id="name-error" class="contact__error" role="alert"></span>
+
+              <span
+                id="name-error"
+                class="contact__error"
+                role="alert"
+              ></span>
             </div>
+
             <div class="contact__field">
-              <label for="company" class="contact__label">Empresa</label>
+              <label for="company" class="contact__label">
+                Empresa
+              </label>
+
               <input
                 type="text"
                 id="company"
@@ -80,12 +110,22 @@ import { SITE } from '../../utils/constants';
                 class="contact__input"
                 placeholder="Tu empresa"
                 autocomplete="organization"
+                maxlength="100"
                 aria-describedby="company-error"
               />
-              <span id="company-error" class="contact__error" role="alert"></span>
+
+              <span
+                id="company-error"
+                class="contact__error"
+                role="alert"
+              ></span>
             </div>
+
             <div class="contact__field">
-              <label for="email" class="contact__label">Correo</label>
+              <label for="email" class="contact__label">
+                Correo
+              </label>
+
               <input
                 type="email"
                 id="email"
@@ -93,13 +133,23 @@ import { SITE } from '../../utils/constants';
                 class="contact__input"
                 placeholder="correo@empresa.com"
                 autocomplete="email"
+                maxlength="254"
                 required
                 aria-describedby="email-error"
               />
-              <span id="email-error" class="contact__error" role="alert"></span>
+
+              <span
+                id="email-error"
+                class="contact__error"
+                role="alert"
+              ></span>
             </div>
+
             <div class="contact__field">
-              <label for="message" class="contact__label">Mensaje</label>
+              <label for="message" class="contact__label">
+                Mensaje
+              </label>
+
               <textarea
                 id="message"
                 name="message"
@@ -107,16 +157,31 @@ import { SITE } from '../../utils/constants';
                 rows="5"
                 placeholder="Cuéntanos brevemente qué necesita tu sitio web..."
                 required
+                minlength="10"
+                maxlength="1500"
                 aria-describedby="message-error"
               ></textarea>
-              <span id="message-error" class="contact__error" role="alert"></span>
+
+              <span
+                id="message-error"
+                class="contact__error"
+                role="alert"
+              ></span>
             </div>
 
-            <button type="submit" class="btn btn--primary btn--lg contact__submit">
+            <button
+              type="submit"
+              class="btn btn--primary btn--lg contact__submit"
+            >
               Enviar mensaje
             </button>
 
-            <p class="contact__status" id="contact-status" role="status" aria-live="polite"></p>
+            <p
+              class="contact__status"
+              id="contact-status"
+              role="status"
+              aria-live="polite"
+            ></p>
           </form>
 
           <p class="contact__note">
@@ -129,127 +194,230 @@ import { SITE } from '../../utils/constants';
 </BaseLayout>
 
 <script>
-  const form = document.getElementById('contact-form');
-  const status = document.getElementById('contact-status');
-  const submitButton = form.querySelector('.contact__submit');
+  const form = document.querySelector<HTMLFormElement>('#contact-form');
+  const status = document.querySelector<HTMLElement>('#contact-status');
 
   const messages = {
     valueMissing: 'Este campo es obligatorio.',
     typeMismatch: 'Introduce un correo electrónico válido.',
-    tooShort: 'Este campo es demasiado corto.',
+    tooShort: 'Introduce un texto más largo.',
+    tooLong: 'El texto supera la longitud permitida.',
+    fallback: 'Revisa este campo e inténtalo nuevamente.',
   };
 
-  function fieldErrorId(input) {
-    return input.getAttribute('aria-describedby');
+  // Filtro básico, no infalible. Ajusta esta lista según las necesidades del sitio.
+  const offensiveTerms = [
+    'puta', 'puto', 'mierda', 'imbecil', 'idiota', 'estupido', 'estupida',
+    'pendejo', 'pendeja', 'cojudo', 'cojuda', 'carajo', 'cagon', 'cagona',
+  ];
+
+  const COOLDOWN_MS = 30_000;
+  const LAST_SEND_KEY = 'novum_contact_last_send';
+
+  function normalizeText(value: string): string {
+    return value
+      .toLocaleLowerCase('es')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
   }
 
-  function setError(input, message) {
-    const errorId = fieldErrorId(input);
-    const error = errorId ? document.getElementById(errorId) : null;
-    const field = input.closest('.contact__field');
-
-    if (message) {
-      input.setAttribute('aria-invalid', 'true');
-      if (error) error.textContent = message;
-      if (field) field.classList.add('contact__field--error');
-    } else {
-      input.removeAttribute('aria-invalid');
-      if (error) error.textContent = '';
-      if (field) field.classList.remove('contact__field--error');
-    }
-  }
-
-  function validateField(input) {
-    let message = '';
-    if (input.validity.valueMissing) {
-      message = messages.valueMissing;
-    } else if (input.validity.typeMismatch) {
-      message = messages.typeMismatch;
-    } else if (input.validity.tooShort) {
-      message = messages.tooShort;
-    }
-    setError(input, message);
-    return !message;
+  function containsOffensiveTerm(value: string): boolean {
+    const normalized = normalizeText(value);
+    return offensiveTerms.some((term) => {
+      const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return new RegExp(`(^|[^a-z0-9])${escaped}([^a-z0-9]|$)`, 'i').test(normalized);
+    });
   }
 
   if (form && status) {
-    const fields = Array.from(form.querySelectorAll('input, textarea'));
+    const submitButton = form.querySelector<HTMLButtonElement>('.contact__submit');
+    const honeypot = form.querySelector<HTMLInputElement>('[name="_gotcha"]');
+    const fields = Array.from(
+      form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+        'input:not([name="_gotcha"]), textarea'
+      )
+    );
+    const messageField = form.querySelector<HTMLTextAreaElement>('#message');
+
+    function setError(
+      input: HTMLInputElement | HTMLTextAreaElement,
+      message: string
+    ) {
+      const errorId = input.getAttribute('aria-describedby');
+      const error = errorId ? document.getElementById(errorId) : null;
+      const field = input.closest('.contact__field');
+
+      if (message) {
+        input.setAttribute('aria-invalid', 'true');
+        if (error) error.textContent = message;
+        field?.classList.add('contact__field--error');
+      } else {
+        input.removeAttribute('aria-invalid');
+        if (error) error.textContent = '';
+        field?.classList.remove('contact__field--error');
+      }
+    }
+
+    function validateField(input: HTMLInputElement | HTMLTextAreaElement): boolean {
+      let message = '';
+      const value = input.value.trim();
+
+      if (input.required && !value) {
+        message = messages.valueMissing;
+      } else if (input.type === 'email' && value) {
+        // Validación de formato; no confirma que el buzón exista.
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+        if (!emailPattern.test(value) || !input.checkValidity()) {
+          message = messages.typeMismatch;
+        }
+      }
+
+      if (!message && value.length < input.minLength && input.required) {
+        message = messages.tooShort;
+      }
+      if (!message && input.maxLength > 0 && value.length > input.maxLength) {
+        message = messages.tooLong;
+      }
+      if (!message && !input.checkValidity()) {
+        message = input.validity.tooShort
+          ? messages.tooShort
+          : input.validity.tooLong
+            ? messages.tooLong
+            : messages.fallback;
+      }
+
+      setError(input, message);
+      return !message;
+    }
 
     fields.forEach((input) => {
       input.addEventListener('blur', () => {
-        if (input.dataset.touched === 'true') {
-          validateField(input);
-        } else {
-          input.dataset.touched = 'true';
-        }
+        if (input.dataset.touched === 'true') validateField(input);
       });
-
       input.addEventListener('input', () => {
-        setError(input, '');
+        input.dataset.touched = 'true';
+        validateField(input);
         status.textContent = '';
       });
     });
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (submitButton?.disabled) return;
+      status.textContent = '';
 
-      if (submitButton.disabled) return;
+      // Un honeypot lleno suele indicar un envío automatizado.
+      if (honeypot?.value.trim()) {
+        status.textContent = 'No se pudo procesar el formulario. Inténtalo nuevamente.';
+        return;
+      }
 
-      let firstInvalid = null;
-
-      fields.forEach((input) => {
+      let firstInvalid: HTMLInputElement | HTMLTextAreaElement | null = null;
+      for (const input of fields) {
         input.dataset.touched = 'true';
-        const valid = validateField(input);
-        if (!valid && !firstInvalid) firstInvalid = input;
-      });
-
+        if (!validateField(input) && firstInvalid === null) firstInvalid = input;
+      }
       if (firstInvalid) {
         status.textContent = 'Revisa los campos marcados para continuar.';
         firstInvalid.focus();
         return;
       }
 
-      const originalLabel = submitButton.textContent;
-      submitButton.textContent = 'Enviando...';
-      submitButton.disabled = true;
-      status.textContent = '';
+      const name = form.querySelector<HTMLInputElement>('#name')?.value.trim() ?? '';
+      const company = form.querySelector<HTMLInputElement>('#company')?.value.trim() ?? '';
+      const message = messageField?.value.trim() ?? '';
+
+      if (containsOffensiveTerm(`${name} ${company} ${message}`)) {
+        if (messageField) {
+          setError(messageField, 'El mensaje contiene expresiones no permitidas. Por favor, modifícalo.');
+          messageField.focus();
+        }
+        status.textContent = 'Revisa el texto antes de enviar tu consulta.';
+        return;
+      }
+
+      // Límite local orientativo: no es un límite por IP y se puede eludir.
+      try {
+        const lastSend = Number(localStorage.getItem(LAST_SEND_KEY) ?? '0');
+        const remaining = COOLDOWN_MS - (Date.now() - lastSend);
+        if (remaining > 0) {
+          const seconds = Math.ceil(remaining / 1000);
+          status.textContent = `Espera ${seconds} segundos antes de enviar otro mensaje.`;
+          return;
+        }
+      } catch {
+        // Si el almacenamiento está bloqueado, el formulario sigue funcionando.
+      }
+
+      const originalLabel = submitButton?.textContent ?? 'Enviar mensaje';
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Enviando...';
+      }
+      status.textContent = 'Enviando tu mensaje...';
 
       try {
-        const payload = {
-          name: form.name.value.trim(),
-          company: form.company.value.trim(),
-          email: form.email.value.trim(),
-          message: form.message.value.trim(),
-        };
+        const formData = new FormData(form);
+        fields.forEach((input) => formData.set(input.name, input.value.trim()));
 
         const response = await fetch(form.action, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify(payload),
+          body: formData,
+          headers: { Accept: 'application/json' },
         });
 
         if (!response.ok) {
-          throw new Error(`Formspree responded with ${response.status}`);
+          let detail = '';
+          try {
+            const result = await response.json();
+            detail = typeof result?.errors?.[0]?.message === 'string'
+              ? result.errors[0].message
+              : '';
+          } catch {
+            // Puede que el servidor no devuelva JSON.
+          }
+          if (response.status === 429) {
+            throw new Error('Se alcanzó el límite de envíos. Espera un momento e inténtalo nuevamente.');
+          }
+          throw new Error(detail || `No se pudo enviar el formulario (${response.status}).`);
+        }
+
+        try {
+          localStorage.setItem(LAST_SEND_KEY, String(Date.now()));
+        } catch {
+          // El envío ya se completó; no fallar por almacenamiento bloqueado.
         }
 
         form.reset();
-        status.textContent =
-          'Mensaje enviado correctamente. Nos pondremos en contacto contigo.';
-      } catch {
-        status.textContent =
-          'No se pudo enviar el mensaje. Inténtalo nuevamente.';
+        fields.forEach((input) => {
+          delete input.dataset.touched;
+          setError(input, '');
+        });
+        status.textContent = '¡Mensaje enviado correctamente! Nos pondremos en contacto contigo.';
+      } catch (error) {
+        console.error('Error al enviar el formulario:', error);
+        status.textContent = error instanceof Error
+          ? error.message
+          : 'No se pudo enviar el mensaje. Comprueba tu conexión e inténtalo nuevamente.';
       } finally {
-        submitButton.disabled = false;
-        submitButton.textContent = originalLabel;
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = originalLabel;
+        }
       }
     });
   }
 </script>
 
 <style>
+    /* Campo invisible para visitantes; los bots que lo rellenen se filtran. */
+  .contact__honeypot {
+    position: absolute !important;
+    left: -10000px !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+  }
   .contact .contact__layout {
     display: grid;
     grid-template-columns: 1fr;
